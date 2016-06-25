@@ -1,22 +1,23 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from setuptools import setup, find_packages
 import os
+
+from setuptools import setup, find_packages
 
 
 def create_default_dir():
     default_dir = os.path.normpath(os.path.realpath(
         (os.path.join(os.path.expanduser("~"), ".spotify-ripper"))))
     if not os.path.exists(default_dir):
-        print("Creating default settings directory: " +
-            default_dir)
+        print("Creating default settings directory: %s" % default_dir)
         os.makedirs(default_dir.encode("utf-8"))
 
 
 def _read(fn):
     path = os.path.join(os.path.dirname(__file__), fn)
     return open(path).read()
+
 
 setup(
     name='spotify-ripper-morgaroth',
