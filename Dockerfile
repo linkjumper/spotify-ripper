@@ -6,8 +6,8 @@ RUN apt update
 RUN apt upgrade -y
 
 RUN apt install software-properties-common python-software-properties -y --no-install-recommends
-RUN apt-add-repository multiverse
-RUN apt update
+RUN apt-add-repository multiverse -y
+RUN apt update -y
 
 RUN apt install build-essential automake autoconf wget -y --no-install-recommends
 RUN apt install lame libffi-dev libffi-dev libssl-dev flac libav-tools faac libfdk-aac-dev vorbis-tools opus-tools \
@@ -33,8 +33,6 @@ COPY README.rst /ripper/source-code/
 COPY docker_config/* /ripper/source-code/
 RUN pip install .
 
-#VOLUME docker_config:/ripper/config
+ENV pass=Password
 
-#ENTRYPOINT spotify-ripper -S /ripper/config -k /ripper/config/spotify_appkey.key -u morgaroth -p  spotify:user:morgaroth:playlist:4Usjw07BWhqCgRkMiFQmb7
-RUN echo "spotify-ripper -S /ripper/config -k /ripper/config/spotify_appkey.key -u morgaroth -p  spotify:user:morgaroth:playlist:4Usjw07BWhqCgRkMiFQmb7" >> ~/.bash_history
-ENTRYPOINT bash
+ENTRYPOINT spotify-ripper -S /ripper/config -k /ripper/config/spotify_appkey.key -u morgaroth -p ${pass} spotify:user:morgaroth:playlist:4Usjw07BWhqCgRkMiFQmb7
