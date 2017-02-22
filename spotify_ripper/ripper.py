@@ -735,7 +735,12 @@ class Ripper(threading.Thread):
     def finish_rip(self, track):
         self.progress.end_track()
         if self.pipe is not None:
-            print(Fore.GREEN + 'Rip complete' + Fore.RESET)
+            ripping_time = format_timedelta(self.progress.last_track_time)
+            print(self.progress.song_duration)
+            print(self.progress.last_track_time.microseconds)
+            speed = int(self.progress.last_track_time.microseconds * 100.0 / track.duration)
+            # speed = 120
+            print(Fore.GREEN + ('Rip complete, it took %s, speed %d%%' % (ripping_time, speed)) + Fore.RESET)
             self.pipe.flush()
             self.pipe.close()
 

@@ -64,3 +64,10 @@ tmp/*
 /SpotifyRipperVM/.vagrant/
 /SpotifyRipperVM/Shared/Music/
 /SpotifyRipperVM/Shared/Settings/config.ini
+/*/offline.bnk
+Users
+Storage
+/*/settings
+user-cache.bnk
+/local_config/Sync/
+/docker_config/Sync/

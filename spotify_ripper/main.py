@@ -154,7 +154,10 @@ def main(prog_args=sys.argv[1:]):
     # set defaults
     parser.set_defaults(**defaults)
 
-    prog_version = pkg_resources.require("spotify-ripper-morgaroth")[0].version
+    try:
+        prog_version = pkg_resources.require("spotify-ripper-morgaroth")[0].version
+    except Exception:
+        prog_version = 'DEV'
     parser.add_argument(
         '-a', '--ascii', action='store_true',
         help='Convert the file name and the metadata tags to ASCII '
@@ -337,7 +340,7 @@ def main(prog_args=sys.argv[1:]):
         'uri', nargs="+",
         help='One or more Spotify URI(s) (either URI, a file of URIs or a '
              'search query)')
-    args = parser.parse_args(remaining_argv)
+    args = parser.parse_args(remaining_argv, args)
     init_util_globals(args)
 
     # kind of a hack to get colorama stripping to work when outputting
@@ -480,20 +483,22 @@ def main(prog_args=sys.argv[1:]):
 
     # check that --stop-after and --resume-after options are valid
     if args.stop_after is not None and \
-            parse_time_str(args.stop_after) is None:
+                    parse_time_str(args.stop_after) is None:
         print(Fore.RED + "--stop-after option is not valid" + Fore.RESET)
         sys.exit(1)
     if args.resume_after is not None and \
-            parse_time_str(args.resume_after) is None:
+                    parse_time_str(args.resume_after) is None:
         print(Fore.RED + "--resume-after option is not valid" + Fore.RESET)
         sys.exit(1)
     if args.play_token_resume is not None and \
-            parse_time_str(args.play_token_resume) is None:
+                    parse_time_str(args.play_token_resume) is None:
         print(Fore.RED + "--play_token_resume option is not valid" + Fore.RESET)
         sys.exit(1)
 
     print(Fore.YELLOW + "  Unicode support:\t" +
           Fore.RESET + unicode_support_str())
+    print(Fore.YELLOW + "  Local encoding:\t" +
+          Fore.RESET + sys.getdefaultencoding())
     print(Fore.YELLOW + "  Output directory:\t" + Fore.RESET +
           base_dir())
     print(Fore.YELLOW + "  Settings directory:\t" + Fore.RESET +
@@ -534,7 +539,7 @@ def main(prog_args=sys.argv[1:]):
     def check_uri_args():
         if len(args.uri) == 1 and path_exists(args.uri[0]):
             args.uri = [line.strip() for line in open(args.uri[0])
-                if not line.strip().startswith("#") and len(line.strip()) > 0]
+                        if not line.strip().startswith("#") and len(line.strip()) > 0]
         elif len(args.uri) == 1 and not args.uri[0].startswith("spotify:"):
             args.uri = [list(ripper.search_query(args.uri[0]))]
 
