@@ -6,7 +6,7 @@
 from __future__ import unicode_literals
 
 from colorama import Fore
-import threading
+import spotify_ripper.thread as threading
 
 try:
     # Python 3

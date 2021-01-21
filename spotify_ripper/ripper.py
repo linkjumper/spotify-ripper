@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 
 import getpass
 import itertools
-import threading
 import time
 import wave
 from subprocess import Popen, PIPE
@@ -17,6 +16,7 @@ from spotify_ripper.post_actions import PostActions
 from spotify_ripper.progress import Progress
 from spotify_ripper.sync import Sync
 from spotify_ripper.tags import set_metadata_tags
+import spotify_ripper.thread as threading
 from spotify_ripper.utils import *
 from spotify_ripper.web import WebAPI
 
